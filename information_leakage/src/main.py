@@ -62,6 +62,9 @@ def robotstxt():
     return "User-agent: *\nDisallow: /my_secret_flag_page"
 """
 
+@app.route('/robots.txt')
+def robots():
+    return "User-agent: *\nDisallow: /my_secret_flag_page"
 
 @app.route('/.git')
 def robotstxt():
