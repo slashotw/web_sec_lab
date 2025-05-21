@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>find flag</title>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
+    <img src="../static/dont_check_me.png" style="display:none;">
+</head>
+
+<body>
+    <style>
+        body,
+        html {
+            padding: 0;
+            margin: 0;
+            background-color: rgba(0, 0, 0, 1.00);
+            color: rgba(255, 255, 255, 1.00);
+            overflow: hidden;
+        }
+
+        body * {
+            z-index: 20;
+            color: rgba(0, 0, 0, 1.00);
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        #content {
+            width: 100%;
+            height: 100vh;
+        }
+
+        #light {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            box-shadow: inset 0 0 150px 150px #000;
+            background: #fff;
+            z-index: 10;
+        }
+
+        .light-off {
+            box-shadow: inset 0 0 150px 250px #000 !important;
+        }
+
+        .pogi {
+            position: absolute;
+            top: 40%;
+            left: 45%;
+            text-align: center;
+        }
+    </style>
+    <script>//this is a sample flashlight effect
+
+        $(document).ready(function () {
+            $(this).mousemove(function (e) {
+                $("#light").css({
+                    "top": e.pageY - 250,
+                    "left": e.pageX - 250
+                })
+            }).mousedown(function (e) {
+                switch (e.which) {
+                    case 1:
+                        $("#light").toggleClass("light-off");
+                        break;
+                    case 2:
+                        console.log('Middle Mouse button pressed.');
+                        break;
+                    case 3:
+                        console.log('Right Mouse button pressed.');
+                        break;
+                    default:
+                        console.log('You have a strange Mouse!');
+                }
+            })
+        })</script>
+    <div id="light"></div>
+
+    <div class="col-xs-12" id="content">
+        <div class="pogi">
+            <h1>no flag here QQ</h1>
+            <p>find another place</p>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,75 @@
+version: "3"
+
+services:
+  devtools:
+    build:
+      context: devtools
+      dockerfile: Dockerfile #基於Dockerfile建立image
+    restart: always
+    container_name: devtools #容器名稱
+    ports:
+      - 8201:80 
+
+  burp:
+    build:
+      context: burp
+      dockerfile: Dockerfile #基於Dockerfile建立image
+    restart: always
+    container_name: burp #容器名稱
+    ports:
+      - 8202:80
+
+  kali:
+    build:
+      context: kali
+      dockerfile: Dockerfile #基於Dockerfile建立image
+    restart: always
+    container_name: kali #容器名稱
+    ports:
+      - 8203:80
+
+  bac:
+    build:
+      context: bac
+      dockerfile: Dockerfile #基於Dockerfile建立image
+    restart: always
+    container_name: bac #容器名稱
+    ports:
+      - 8204:80
+
+  path_traversal:
+    build:
+      context: path_traversal
+      dockerfile: Dockerfile #基於Dockerfile建立image
+    restart: always
+    container_name: path_traversal #容器名稱
+    ports:
+      - 8205:80
+
+  information_leakage:
+    build:
+      context: information_leakage
+      dockerfile: Dockerfile #基於Dockerfile建立image
+    restart: always
+    container_name: information_leakage #容器名稱
+    ports:
+      - 8206:80
+
+  xss:
+    build:
+      context: xss
+      dockerfile: Dockerfile #基於Dockerfile建立image
+    restart: always
+    container_name: xss #容器名稱
+    ports:
+      - 8207:80
+
+  sql_injection:
+    build:
+      context: sql_injection
+      dockerfile: Dockerfile #基於Dockerfile建立image
+    restart: always
+    container_name: sql_injection #容器名稱
+    ports:
+      - 8208:80
+

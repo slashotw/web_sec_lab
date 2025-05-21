@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>賽博放生鯉魚</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+  <style>
+    canvas {
+      width: 100%;
+      height: 300px;
+
+    }
+
+    .cimage {
+      width: 55%;
+      height: 170px;
+      position: relative;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    #click-effect {
+        position: absolute;
+        pointer-events: none;
+        background-color: #000;
+        color: #fff;
+        font-size: 20px;
+        padding: 10px;
+        border-radius: 5px;
+        animation: clickEffect 1s ease-out;
+      }
+      @keyframes clickEffect {
+        0% {
+          opacity: 1;
+          transform: translateY(-40px)translateX(-40px);
+
+        }
+        100% {
+          opacity: 0;
+          transform: translateY(-80px)translateX(-40px);
+        }
+      }
+  </style>
+</head>
+
+<body>
+  <section class="section">
+    <div class="container">
+      <div class="column is-10  is-offset-1">
+
+        <div class="box">
+          <h1 class="title">賽博放生鯉魚</h1>
+          <h1 class="subtitle"><br>主打<a href="https://youtube.com/shorts/YBkpFGZVzbA?feature=share">心誠則靈</a>，放生數位鯉魚以累積你的電子陰德！<br>把鯉魚拖曳到右邊的湖中，放生祂，累積1000000陰德即可獲得賽博祝福！！！</h1>
+          <h1>累積的陰德: <span id="score">0</span></h1>
+          <br>
+          <form id="score_form" method="POST" action="/">
+            <input type="hidden" name="score" id="score_input">
+            <div class="buttons">
+              <button class="button is-primary" id="send" type="submit">sent</button>
+            </div>
+
+          </form>
+          <script>
+            const message = "{{ alert }}";
+            window.onload = function () {
+              if (message !== "") Swal.fire({
+                icon: 'error',
+                title: '陰德不夠...',
+                timer: 2000
+              });
+            }
+          </script>
+
+
+
+          <div class="columns">
+            <div class="column">
+              <img class="cimage" id="a" src="../static/fish.png" draggable="true">
+            </div>
+            <div class="column is-half">
+              <canvas id="canvas"></canvas>
+            </div>
+          </div>
+
+          <script src="../static/game.js"></script>
+          <script src="../static/fetch.js"></script>
+
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+</body>
+
+</html>
+

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern CTF Challenge</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #f3f4f6;
+            --text-color: #333;
+            --border-color: #e0e0e0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #ffffff;
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .container {
+            background-color: var(--secondary-color);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            padding-top: 30px;
+            height: 0;
+            overflow: hidden;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+        }
+
+        #comments {
+            margin-top: 30px;
+        }
+
+        .comment {
+            background-color: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .comment:hover {
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .comment-author {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        #comment-form {
+            margin-top: 30px;
+        }
+
+        #comment-form input,
+        #comment-form textarea,
+        .button-group {
+            width: 100%;
+            box-sizing: border-box;
+            margin-bottom: 15px;
+        }
+
+        #comment-form input,
+        #comment-form textarea {
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        #comment-form textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        #comment-form input:focus,
+        #comment-form textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .button-group button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .button-group button:first-child {
+            margin-right: 10px;
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .button-group button:first-child:hover {
+            background-color: #3a7abd;
+        }
+
+        #clear-comments {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        #clear-comments:hover {
+            background-color: #c0392b;
+        }
+    </style>
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>微積分(二)課外討論版</h1>
+        <div class="video-container">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/C90Q29DKh_Q" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div id="comments"></div>
+        <div id="comment-form">
+            <input type="text" id="author" placeholder="Your name">
+            <textarea id="content" placeholder="Your comment"></textarea>
+            <div class="button-group">
+                <button onclick="addComment()">Add Comment</button>
+                <button id="clear-comments" onclick="clearComments()">Clear All Comments</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // try try看透過script tag 貼出 
+        const encodedFlag = "{{ encoded_flag }}";
+        const decodedFlag = atob(encodedFlag);
+     
+        // 預設評論
+        const defaultComments = [
+            {author: "活網仔", content: "謝謝莊老師我過ㄌ"},
+            {author: "貓咪星人", content: "喵"}
+        ];
+
+        // 初始化localStorage
+        function initializeComments() {
+            if (!localStorage.getItem('comments')) {
+                localStorage.setItem('comments', JSON.stringify(defaultComments));
+            }
+        }
+
+        // 從 localStorage 加載評論
+        function loadComments() {
+            const comments = JSON.parse(localStorage.getItem('comments')) || [];
+            const commentsContainer = document.getElementById('comments');
+            commentsContainer.innerHTML = '';
+            comments.forEach(comment => {
+                const commentElement = document.createElement('div');
+                commentElement.className = 'comment';
+                commentElement.innerHTML = `
+                    <div class="comment-author">${comment.author}</div>
+                    <div class="comment-content">${comment.content}</div>
+                `;
+                commentsContainer.appendChild(commentElement);
+                
+                // 執行評論中的 JavaScript
+                const scripts = commentElement.getElementsByTagName('script');
+                Array.from(scripts).forEach(script => {
+                    const newScript = document.createElement('script');
+                    newScript.text = script.innerHTML;
+                    script.parentNode.replaceChild(newScript, script);
+                });
+            });
+        }
+
+        // 添加評論
+        function addComment() {
+            const author = document.getElementById('author').value;
+            const content = document.getElementById('content').value;
+            if (author && content) {
+                const comments = JSON.parse(localStorage.getItem('comments')) || [];
+                comments.push({author, content});
+                localStorage.setItem('comments', JSON.stringify(comments));
+                loadComments();
+                document.getElementById('author').value = '';
+                document.getElementById('content').value = '';
+            }
+        }
+
+        // 清除所有評論
+        function clearComments() {
+            localStorage.removeItem('comments');
+            loadComments();
+        }
+
+        // 初始化並顯示評論
+        initializeComments();
+        loadComments();
+    </script>
+</body>
+</html>
