@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>my blog :D</title>
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #45a049;
+            --text-color: #333;
+            --bg-color: #f4f4f4;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            padding: 0 20px;
+        }
+        header {
+            background: #fff;
+            color: var(--text-color);
+            padding-top: 30px;
+            min-height: 70px;
+            border-bottom: 3px solid var(--primary-color);
+        }
+        header a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 16px;
+        }
+        header .logo {
+            float: left;
+            font-size: 25px;
+            font-weight: bold;
+        }
+        header nav {
+            float: right;
+            margin-top: 10px;
+        }
+        header .highlight, header .current a {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        header a:hover {
+            color: var(--secondary-color);
+            font-weight: bold;
+        }
+        .article-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-gap: 20px;
+            padding: 20px 0;
+        }
+        .article {
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .article:hover {
+            transform: translateY(-5px);
+        }
+        .article h2 {
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        .article p {
+            margin-bottom: 10px;
+        }
+        .read-more {
+            display: inline-block;
+            background: var(--primary-color);
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        .read-more:hover {
+            background: var(--secondary-color);
+        }
+        @media(max-width: 768px) {
+            header .logo,
+            header nav,
+            header nav li {
+                float: none;
+                text-align: center;
+                width: 100%;
+            }
+            header {
+                padding-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1><span class="highlight">my</span> blog :D</h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="article-grid">
+            {% for article in articles %}
+            <div class="article">
+                <h2>{{ article.title }}</h2>
+                <p>{{ article.content[:100] }}...</p>
+                <a href="#" class="read-more">閱讀更多</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
